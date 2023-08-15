@@ -1,3 +1,8 @@
+# todo-challenge-30-min 
+
+For the tweet: https://twitter.com/barelyreaper/status/1691543793248657408
+Speed run video: https://youtu.be/ld8bBI0RtK0
+
 # thestack
 
 I spent the time making the decisions so you don't have to.
