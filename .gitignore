@@ -1,0 +1,11 @@
+node_modules
+dist
+
+
+prisma/*.db
+
+.env*
+!.env.example
+
+docs_dist
+.DS_Store

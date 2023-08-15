@@ -1,0 +1,77 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Team {
+  id        Int      @id @default(autoincrement())
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  name       String
+  TeamMember TeamMember[]
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  email     String
+  name      String?
+  password  String
+  salt      String
+
+  TeamMember TeamMember[]
+  Tokens     Tokens[]
+
+  Task Task[]
+}
+
+model TeamMember {
+  id        Int      @id @default(autoincrement())
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Values / enum for `role` are in lib/constants
+  role Int
+
+  invitedEmail String?
+  user         User?   @relation(fields: [userId], references: [id])
+  userId       Int?
+  team         Team    @relation(fields: [teamId], references: [id])
+  teamId       Int
+}
+
+model Task {
+  id        Int      @id @default(autoincrement())
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  state   Int
+  content String
+  user    User   @relation(fields: [userId], references: [id])
+  userId  Int
+}
+
+model Tokens {
+  id        Int      @id @default(autoincrement())
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  name      String
+  authToken String?
+
+  user   User @relation(fields: [userId], references: [id])
+  userId Int
+}

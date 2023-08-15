@@ -1,0 +1,35 @@
+{% extends 'layouts/base.njk' %}
+
+{% block body %}
+  <div class="max-w-3xl flex flex-col gap-2 mx-auto">
+    <div>
+      <a href="/tasks/new">New</a>
+    </div>
+
+    {% for task in tasks %}
+      {# <a href="/task/{{ task.id }}/view"> #}
+        <div class="border border-zinc-300 rounded-md hover:border-black transition-all duration-250 hover:border-2">
+          <div class="flex text-zinc-500 justify-between items-center border-b border-gray-200 p-2">
+            <div>
+              ~{{ task.user.email }}
+            </div>
+            <div>
+              {{ task.createdAt.toLocaleDateString() }}
+            </div>
+          </div>
+          <article class="p-2 pb-3">
+            {{ task.content }}
+          </article>
+          <div class="flex border-t botder-t-zinc-100 p-2 align-center justify-end">
+            <form class="flex gap-2" method="post" action="/tasks/{{task.id}}">
+              <input type="checkbox" name="state" 
+              {%if task.done%}checked{%endif%}/>
+              <button class="btn mini" >Update</button>
+            </form>
+            <a class="btn mini" href="/tasks/{{task.id}}/view">View Task </a>
+          </div>
+        </div>
+      {# </a> #}
+    {% endfor %}
+  </div>
+{% endblock %}
